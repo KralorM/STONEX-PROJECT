@@ -1,0 +1,182 @@
+using System;
+using System.Collections.Generic;
+namespace Konto_bankowe_Klienta_StoneX___Karol_Maciejczyk
+{
+    public class DaneKarty
+    {
+        public String cardnum;
+        int pin;
+        String Nazwisko;
+        String Imie;
+        double balanskonta;
+
+        public DaneKarty(String cardnum, int pin, String Nazwisko, double balanskonta, String Imie)
+        {
+            this.cardnum = cardnum;
+            this.pin = pin;
+            this.Nazwisko = Nazwisko;
+            this.Imie = Imie;
+            this.balanskonta = balanskonta;
+
+        }
+        public String getNum()
+        {
+            return cardnum;
+        }
+        public int getpin()
+        {
+            return pin;
+
+        }
+        public String getNazwisko()
+        {
+            return Nazwisko;
+        }
+        public String getImie()
+        {
+            return Imie;
+        }
+        public double getbalanskonta()
+        {
+            return balanskonta;
+        }
+        public void setNum(String newCardnum)
+        {
+            cardnum = newCardnum;
+        }
+        public void setpin(int newPin)
+        {
+            pin = newPin;
+        }
+        public void setImie(String newImie)
+        {
+            Imie = newImie;
+        }
+        public void setNazwisko(String newNazwisko)
+        {
+            Nazwisko = newNazwisko;
+        }
+        public void setBalanskonta(double newbalanskonta)
+        {
+            balanskonta = newbalanskonta;
+        }
+
+
+
+    }
+    public class Program
+    {
+        public static void Main(string[] args)
+        { 
+            static void wyswietlopcje()
+            {
+                Console.WriteLine("Witaj w naszej aplikacji bankowej wybierz co chcesz dzisiaj zrobic!:");
+                Console.WriteLine("1.Wpłać");
+                Console.WriteLine("2.Wypłać");
+                Console.WriteLine("3.Sprawdz stan konta");
+                Console.WriteLine("4.Wyloguj");
+
+                
+
+            }
+            static void depozyt(DaneKarty wlasciciel)
+            {
+                Console.WriteLine("Podaj ilosc która chciałbyś wpłacic na swoje konto:");
+                double depozyt = Double.Parse(Console.ReadLine());
+                wlasciciel.setBalanskonta(depozyt);
+                Console.WriteLine("Twoje saldo po dokonanej tranzakcji wynosi:" + wlasciciel.getbalanskonta());
+            }
+            static void Wypłac(DaneKarty wlasciciel)
+            {
+                Console.WriteLine("Podaj ilosc która chciałbyś wypłacic ze swojego konta:");
+                double wypłata = Double.Parse(Console.ReadLine());
+
+                if (wlasciciel.getbalanskonta() < wypłata)
+                {
+                    Console.WriteLine("Za mała ilosc środków na koncie do wypłacenia");
+
+                }
+                else
+                {
+
+                    wlasciciel.setBalanskonta(wlasciciel.getbalanskonta() - wypłata);
+                    Console.WriteLine("Tranzakcja zakończona pomyślnie");
+
+                }
+            }
+            static void Balanskonta(DaneKarty wlasciciel)
+            {
+                Console.WriteLine("Aktualne Saldo:" + wlasciciel.getbalanskonta());
+            }
+
+           
+
+                List<DaneKarty> DaneKart = new List<DaneKarty>();
+                DaneKart.Add(new DaneKarty("1234567894563241", 4567, "Michał", 189.98, "Maciejowski"));
+                DaneKart.Add(new DaneKarty("1234567749163331", 9876, "Paweł", 205.78, "Burkiewicz"));
+                DaneKart.Add(new DaneKarty("1234567803926481", 4532, "Karol", 7869.43, "Krawczyk"));
+                DaneKart.Add(new DaneKarty("1234567897564839", 0952, "Tadeusz", 50.50, "Norek"));
+
+
+                Console.WriteLine("Witaj w twoje aplikacji bankowej");
+                Console.WriteLine("ZALOGUJ:");
+                Console.WriteLine("Wprowadz numer karty:");
+                String numerkartydebetowej = "";
+                DaneKarty wlasciciel;
+                while (true)
+                {
+                    try
+                    {
+                        numerkartydebetowej = Console.ReadLine();
+                        wlasciciel = DaneKart.Find(a => a.cardnum == numerkartydebetowej);
+                        if (wlasciciel.getNum() != null) { break; }
+                        else { Console.WriteLine("Zły numer kartu spróbuj ponownie"); }
+                    }
+                    catch { Console.WriteLine("Zły numer karty prosze spróbowac ponownie"); }
+                }
+
+                Console.WriteLine("Wprowadz pin:");
+                int pinuzytkownika = 0;
+                while (true)
+                {
+                    try
+                    {
+                        pinuzytkownika = int.Parse(Console.ReadLine());
+                        if (wlasciciel.getpin() == pinuzytkownika) { break; }
+                        else { Console.WriteLine("Zły pin proszę spróbuj ponownie"); }
+
+                    }
+                    catch { Console.WriteLine("Zły pin proszę spróbuj ponownie"); }
+                }
+                Console.WriteLine("Witaj" + wlasciciel.getImie());
+                int opcje = 0;
+                do
+                {
+                    wyswietlopcje();
+                    try
+                    {
+                        opcje = int.Parse(Console.ReadLine());
+
+                    }
+                    catch { }
+                    if (opcje == 1) { depozyt(wlasciciel); }
+                    else if (opcje == 2) { Wypłac(wlasciciel); }
+                    else if (opcje == 3) { Balanskonta(wlasciciel); }
+                    else if (opcje == 4) { break; }
+                    else { opcje = 0; break; }
+
+
+
+
+
+                }
+                while (opcje != 4);
+                Console.WriteLine("Zostałes bezpiecznie wylogowany z aplikacji bankowej");
+
+
+            
+
+        }   
+
+    }
+}
