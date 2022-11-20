@@ -1,0 +1,41 @@
+using System;
+
+namespace ZADANIE_2_KAROL_MACIEJCZYK_STONEX
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+           
+
+            int number, silnia = 1;
+            Console.WriteLine("Wpisz numer którego silnie chcesz poznac:");
+            number = Convert.ToInt32(Console.ReadLine());
+
+
+            if(number < 0)
+            {
+                Console.WriteLine("ERROR");
+            }
+            else if(number <= 1)
+            {
+                Console.WriteLine("{0}! = {1}", number, silnia);
+            }
+            else
+            {
+                for(int i = number; i >= 2; i--)
+                {
+                    silnia = silnia * i;
+                }
+            }
+            Console.WriteLine("{0}! = {1}", number, silnia);
+
+
+
+
+            
+        }
+        
+            }
+        }
+    
